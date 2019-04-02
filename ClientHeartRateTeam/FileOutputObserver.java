@@ -37,10 +37,12 @@ public class FileOutputObserver implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		ClientSubscriber csObject = (ClientSubscriber) o;
+		CombinedDataStatefull csObject = (CombinedDataStatefull) o;
 		String data = csObject.getObject().toString();
 		FileOutputObserver fileOutput = csObject.getFile();
 		if (data.equals("FIN")) {
+			
+			System.out.println("shutdown");
 			try {
 				fileOutput.writer.close();
 			} catch (IOException e) {
@@ -48,6 +50,7 @@ public class FileOutputObserver implements Observer {
 			}
 		} else {
 			try {
+				System.out.println("Writing to file "+fileOutput.fileName);
 				fileOutput.writer.write(data);
 				fileOutput.writer.newLine();
 			} catch (IOException e) {

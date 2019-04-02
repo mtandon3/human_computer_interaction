@@ -174,6 +174,10 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		String data = ((ClientSubscriber) o).getObject().toString();
 		if (data.compareTo("STOPPED") == 0 || data.compareTo("FIN") == 0) {
+			if(data.compareTo("FIN") == 0) {
+				CombinedDataStatefull combined = CombinedDataStatefull.getInstance();
+				combined.addToGlobalQueue(data);
+			}
 			this.getParent().revalidate();
 			this.getParent().repaint();
 			close();
@@ -187,6 +191,9 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 			JOptionPane.showMessageDialog(new JPanel(), "Connection Fail: Server not running", "Error", JOptionPane.ERROR_MESSAGE);
 			connect.setText("Connect");
 		} else {
+			System.out.println(CombinedDataStatefull.getInstance());
+			CombinedDataStatefull combined = CombinedDataStatefull.getInstance();
+			combined.addToGlobalQueue(data);
 			dataPane.setText(dataPane.getText() + "\n" + data);
 			dataPane.setForeground(Color.BLACK);
 			this.getParent().revalidate();

@@ -27,6 +27,7 @@ public class FacialData extends Data{
     public int longTermExcitement;
     public int meditation;
     public int furstration;
+    private double timestampsystem;
     
     
     public int getrWink() {
@@ -80,6 +81,8 @@ public class FacialData extends Data{
     public FacialData(double timestampsystem, ArrayList<Double> facialValues) {
 		// TODO Auto-generated constructor stub
     	super(timestampsystem,0);
+    //	super(time,0);
+        this.timestampsystem=timestampsystem;
     	this.setBlink((int)Math.round(facialValues.get(0)));
     	this.setlWink((int)Math.round(facialValues.get(1)));
     	this.setrWink((int)Math.round(facialValues.get(2)));
@@ -193,9 +196,10 @@ public class FacialData extends Data{
 @Override
   public String toString() {
 	
-    return "Facial Data : " + "Blink ="+this.getBlink() + "Left Smirk =" +this.getLeftSmirk() + "Right Smirk" +this.getRighSmirk() + "Smile" + this.getSmile() 
+	return this.timestampsystem+","+this.getSmile()+","+this.getRaiseBrow()+","+this.getClench();
+    /*return "Facial Data : " + "Blink ="+this.getBlink() + "Left Smirk =" +this.getLeftSmirk() + "Right Smirk" +this.getRighSmirk() + "Smile" + this.getSmile() 
     + "Laugh" + this.getLaugh() + "Clench" + this.getClench() + "Engagement" + getEngagement() + "ShortTermExcitement" + this.getShortTermExcitement() + 
-    "Long Term Excitement" + this.getLongTermExcitement() + "Meditation" + this.getMeditation() + "Frustation" + this.getFurstration();
+    "Long Term Excitement" + this.getLongTermExcitement() + "Meditation" + this.getMeditation() + "Frustation" + this.getFurstration();*/
   }
      
 }

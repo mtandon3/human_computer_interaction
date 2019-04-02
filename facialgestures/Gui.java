@@ -143,7 +143,7 @@ public class Gui extends JPanel implements ActionListener {
 	slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				double value = ((JSlider) e.getSource()).getValue() * 0.1;
-				System.out.println(labelNum.getText());
+				//System.out.println(labelNum.getText());
 			if (labelNum.getText()== "Left Smirk") {
 				Gui.this.flag = 1;
 					if (((JSlider) e.getSource()).getValue() <3) { 
@@ -556,7 +556,7 @@ public class Gui extends JPanel implements ActionListener {
 	lablePanel.add(new JLabel());
 	add(lablePanel, BorderLayout.NORTH);
     add(tp);
-    System.out.println("gui done");
+    //System.out.println("gui done");
   }
 
 	private void expressionToIndexMapping() {
@@ -583,8 +583,8 @@ public class Gui extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 //		gifIcon.setIcon(createImageIcon(e.getActionCommand() + ".gif"));
 
-		System.out.println(e.getActionCommand());
-		System.out.println("listener trigger");
+		//System.out.println(e.getActionCommand());
+		//System.out.println("listener trigger");
 
 		for (int i = 0; i < 17; i++) {
 			arrayList.add(0.0);
@@ -596,13 +596,13 @@ public class Gui extends JPanel implements ActionListener {
 
 		if (e.getSource() == buttonConnect) {
 			if (buttonConnect.getText().compareTo("run") == 0) {
-				System.out.println("start");
+				//System.out.println("start");
 				model.setFacialValues(arrayList);
 				model.start();
 
 				buttonConnect.setText("stop");
 			} else if (buttonConnect.getText().compareTo("stop") == 0) {
-				System.out.println("stop");
+				//System.out.println("stop");
 				model.stop();
 				buttonConnect.setText("run");
 			}

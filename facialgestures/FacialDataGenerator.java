@@ -38,7 +38,7 @@ class FacialDataGenerator extends DataGenerator implements Runnable {
       timeStamp = (System.currentTimeMillis() - initialTime) * .001;
       createAndNotify(timeStamp, getFacialValues());
       try {
-        Thread.sleep(1000);
+        Thread.sleep(40);
       } catch (InterruptedException ex) {
       }
     }

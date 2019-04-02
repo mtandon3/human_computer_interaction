@@ -22,7 +22,7 @@ public class ClientSubscriber extends Observable implements Runnable {
 	private String Ip;
 	private int port;
 	private String data;
-	private FileOutputObserver file;
+	//private FileOutputObserver file;
 
 	// Constructor for Client Subscriber
 	ClientSubscriber(String Ip, int port) {
@@ -54,14 +54,14 @@ public class ClientSubscriber extends Observable implements Runnable {
 	public synchronized Object getObject() {
 		return this.data;
 	}
-
+/*
 	public FileOutputObserver getFile() {
 		return file;
 	}
 
 	public void setFile(FileOutputObserver file) {
 		this.file = file;
-	}
+	}*/
 
 	public void stop() {
 		stop = true;
@@ -83,8 +83,8 @@ public class ClientSubscriber extends Observable implements Runnable {
 			client = new Socket(InetAddress.getByName(Ip.trim()), port);
 			input = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			client.setSoTimeout(1000);
-			file = new FileOutputObserver();
-			this.addObserver(file);
+			//file = new FileOutputObserver();
+			//this.addObserver(file);
 			serverCheck = true;
 			serverRunning = true;
 		} catch (IOException ex) {
@@ -101,7 +101,7 @@ public class ClientSubscriber extends Observable implements Runnable {
 				stop = true;
 				serverRunning = false;
 			} else {
-				System.out.println(measureLocal);
+				//System.out.println(measureLocal);
 				setData(measureLocal);
 				setChanged();
 				notifyObservers();

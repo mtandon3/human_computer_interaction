@@ -28,7 +28,7 @@ public class HeartData extends Core.Data{
   @Override
   public String toString() {
 	  
-	  return "Timestamp=" + this.time + ", Heart Rate=" + values.get(0) ;
+	  return this.time + "," + values.get(0) ;
    // return "Heart Rate = " + values.get(0);
   }
      
