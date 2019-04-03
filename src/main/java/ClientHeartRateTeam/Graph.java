@@ -122,9 +122,18 @@ public class Graph extends JPanel {
     range.setAxisLineVisible(false);
 
     range = plot.getDomainAxis();
+    int len = graphModel.getGraphData().size();
+    double xRange;
     if(graphModel.getXLength() == 0)
       graphModel.setXLength(1);
-    range.setRange(0, graphModel.getXLength());
+    if (graphModel.getGraphData().isEmpty())
+      xRange = graphModel.getXLength();
+    else
+      xRange = graphModel.getGraphData().get(len - 1).get(0).getXCoordinate();
+    if (xRange <= graphModel.getXLength())
+      range.setRange(0, graphModel.getXLength());
+    else
+      range.setRange(graphModel.getGraphData().get(0).get(0).getXCoordinate(), xRange);
     range.setTickLabelPaint(Color.WHITE);
     range.setTickLabelFont(new Font("Courier New", Font.BOLD, GRAPH_AXIS_FONT_SIZE));
 
