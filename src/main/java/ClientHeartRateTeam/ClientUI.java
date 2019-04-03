@@ -19,10 +19,12 @@ public class ClientUI extends JPanel {
 
     private static ClientUI instance = null;
     private List<UIElement> simulators = new ArrayList<>();
+    public GraphModel graphModel;
+    public Graph graph;
     
     String[] colors= {"#0d3d56","#4a6b7c","#0d3d56","#4a6b7c","#0d3d56"};
     // Method used to get instance of the Client UI class
-    private static ClientUI getInstance() {
+    public static ClientUI getInstance() {
         if (instance == null)
             instance = new ClientUI();
 
@@ -40,11 +42,10 @@ public class ClientUI extends JPanel {
             simulators.add(uiElement);
             this.add(uiElement);
         }
-        GraphModel graphModel = new GraphModel();
-        Graph graph = new Graph(graphModel);
+        graphModel = new GraphModel();
+        graph = new Graph(graphModel);
         this.add(graph);
         graph.initializeView();
-        testGraph(graph, graphModel);
     }
 
     // Method called when the application is shut down
@@ -60,26 +61,6 @@ public class ClientUI extends JPanel {
                 System.out.println("Exception: " + ex);
             }
         }
-    }
-
-    private void testGraph(Graph graph, GraphModel graphModel) {
-      graphModel.setNoOfChannels(1);
-      Color channelColors[] = new Color[] { Color.RED };
-      graphModel.setChannelColors(channelColors);
-
-      ArrayList<ArrayList<CoordinatesModel>> graphData = new ArrayList<ArrayList<CoordinatesModel>>();
-      for(int xCoordinate = 0; xCoordinate < 10; xCoordinate++) {
-        ArrayList<CoordinatesModel> coordinatesList = new ArrayList<CoordinatesModel>();
-        for(int channelNo = 0; channelNo < graphModel.getNoOfChannels(); channelNo++) {
-          Random rand = new Random();
-          double yCoordinate = rand.nextDouble();
-          coordinatesList.add(new CoordinatesModel(xCoordinate, yCoordinate + channelNo));
-        }
-        graphData.add(coordinatesList);
-      }
-      graphModel.setXLength(100);
-      graphModel.setGraphData(graphData);
-      graph.updateGraphView(graphModel);
     }
 
     // Method to run the Client UI application

@@ -15,6 +15,7 @@ public class GraphModel {
     XLength = 1;
     noOfChannels = 1;
     xStartPoint = 0;
+    graphData = new ArrayList<>();
   }
 
   /**

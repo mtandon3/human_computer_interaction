@@ -59,7 +59,7 @@ public class Graph extends JPanel {
    */
   public void updateGraphView(GraphModel graphModel) {
     this.graphModel = graphModel;
-    legendDisplay = false;
+    legendDisplay = true;
     remove(chartPanel);
     XYDataset dataSet = createDataSet();
     chart = createChart(dataSet);

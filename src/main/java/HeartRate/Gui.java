@@ -3,6 +3,7 @@ package HeartRate;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.*;
 import Core.Publisher;
 /***
@@ -129,12 +130,11 @@ public class Gui extends JPanel implements ActionListener {
 
 	// Method used to create the initial static GIF
 	private void initializeHeartGif() {
-		ImageIcon ii = new ImageIcon(this.getClass().getResource("Resources/heart_static.png"));
+		ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource("heart_static.png"));
 		JLabel imageLabel = new JLabel();
 		imageLabel.setIcon(ii);
 		gifPanel.setBackground(Color.WHITE);
 		gifPanel.add(imageLabel);
-
 	}
 
 	// Method for Action Listeners for button clicks
@@ -163,7 +163,7 @@ public class Gui extends JPanel implements ActionListener {
 				buttonConnect.setText("run");
 				freqText.setEnabled(true);
 				textPane.setBackground(Color.WHITE);
-				ImageIcon ii = new ImageIcon(this.getClass().getResource("Resources/heart_static.png"));
+				ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource("heart_static.png"));
 				JLabel imageLabel = new JLabel();
 				imageLabel.setIcon(ii);
 				gifPanel.removeAll();
@@ -174,24 +174,24 @@ public class Gui extends JPanel implements ActionListener {
 
 			if(model.getServerState()) {
 				if (checkButtonSelected()==0)
-					updateHeartGif("Resources/heart_slow.gif");
+					updateHeartGif("heart_slow.gif");
 				else if (checkButtonSelected()==1)
-					updateHeartGif("Resources/heart_moderate.gif");
+					updateHeartGif("heart_moderate.gif");
 				else if (checkButtonSelected()==2)
-					updateHeartGif("Resources/heart_fast.gif");
+					updateHeartGif("heart_fast.gif");
 				model.setHeartState(checkButtonSelected());
 			}
 		}
 		
 		if(model.getServerState()) {
 			if (e.getSource() == resting ) {
-				updateHeartGif("Resources/heart_slow.gif");
+				updateHeartGif("heart_slow.gif");
 				model.setHeartState(0);
 			} else if (e.getSource() == moderate) {
-				updateHeartGif("Resources/heart_moderate.gif");
+				updateHeartGif("heart_moderate.gif");
 				model.setHeartState(1);
 			} else if (e.getSource() == vigorous) {
-				updateHeartGif("Resources/heart_fast.gif");
+				updateHeartGif("heart_fast.gif");
 				model.setHeartState(2);
 			}
 		}
@@ -199,7 +199,7 @@ public class Gui extends JPanel implements ActionListener {
 
 	// Method to update GIF based on heart state
 	private void updateHeartGif(String image) {
-		ImageIcon ii = new ImageIcon(this.getClass().getResource(image));
+		ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource(image));
 		JLabel imageLabel = new JLabel();
 		imageLabel.setIcon(ii);
 		gifPanel.removeAll();
