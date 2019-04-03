@@ -3,8 +3,13 @@ package ClientHeartRateTeam;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -59,13 +64,18 @@ public class Graph extends JPanel {
    */
   public void updateGraphView(GraphModel graphModel) {
     this.graphModel = graphModel;
-    legendDisplay = true;
+    legendDisplay = false;
     remove(chartPanel);
     XYDataset dataSet = createDataSet();
     chart = createChart(dataSet);
     chartPanel = new ChartPanel(chart);
     add(chartPanel);
     setVisible(true);
+    try {
+      ChartUtils.saveChartAsPNG(new File("chart.png"), chart, 400, 400);
+    } catch (Exception ex){
+      System.out.println(ex);
+    }
   }
 
   /**
@@ -109,31 +119,19 @@ public class Graph extends JPanel {
    * @return chart JFreeChart
    */
   private JFreeChart createChart(final XYDataset dataSet) {
-    JFreeChart chart = ChartFactory.createXYLineChart("", "",
-        "", dataSet, PlotOrientation.VERTICAL, legendDisplay, true,
+    JFreeChart chart = ChartFactory.createXYLineChart("", "Pleasure",
+        "Arousal", dataSet, PlotOrientation.VERTICAL, legendDisplay, true,
         false);
     chart.setBackgroundPaint(Color.decode("#AFAFAF"));
 
     XYPlot plot = chart.getXYPlot();
 
-    ValueAxis range = plot.getRangeAxis();
-    range.setTickLabelsVisible(false);
-    range.setTickMarksVisible(false);
-    range.setAxisLineVisible(false);
-
-    range = plot.getDomainAxis();
-    int len = graphModel.getGraphData().size();
-    double xRange;
+    ValueAxis range = plot.getDomainAxis();
     if(graphModel.getXLength() == 0)
       graphModel.setXLength(1);
-    if (graphModel.getGraphData().isEmpty())
-      xRange = graphModel.getXLength();
-    else
-      xRange = graphModel.getGraphData().get(len - 1).get(0).getXCoordinate();
-    if (xRange <= graphModel.getXLength())
-      range.setRange(0, graphModel.getXLength());
-    else
-      range.setRange(graphModel.getGraphData().get(0).get(0).getXCoordinate(), xRange);
+    range.setRange(0, graphModel.getXLength());
+    plot.getRangeAxis().setRange(0, 1);
+    plot.getRangeAxis().setTickLabelPaint(Color.WHITE);
     range.setTickLabelPaint(Color.WHITE);
     range.setTickLabelFont(new Font("Courier New", Font.BOLD, GRAPH_AXIS_FONT_SIZE));
 
