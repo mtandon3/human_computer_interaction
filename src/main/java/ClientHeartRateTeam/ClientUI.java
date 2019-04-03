@@ -24,6 +24,9 @@ public class ClientUI extends JPanel {
     private List<UIElement> simulators = new ArrayList<>();
     public GraphModel graphModel;
     public Graph graph;
+    private final JPanel gifPanel = new JPanel();
+    
+	
     
     String[] colors= {"#0d3d56","#4a6b7c","#0d3d56","#4a6b7c","#0d3d56"};
     // Method used to get instance of the Client UI class
@@ -38,7 +41,7 @@ public class ClientUI extends JPanel {
     private ClientUI() {
         this.setBackground(Color.WHITE);
         this.setPreferredSize(new Dimension(600, 800));
-        this.setLayout(new GridLayout(3, 1));
+        this.setLayout(new GridLayout(2, 2));
 
         for(int i=0 ;i<2;i++) {
             UIElement uiElement = new UIElement(new ClientSubscriber("",-1),colors[i]);
@@ -49,8 +52,23 @@ public class ClientUI extends JPanel {
         graph = new Graph(graphModel);
         this.add(graph);
         graph.initializeView();
-        createTrainImage();
+        //createTrainImage();
+        ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource("neutral.png"));
+        	JLabel imageLabel = new JLabel();
+        	imageLabel.setIcon(ii);
+        	gifPanel.add(imageLabel);
+        	this.add(gifPanel);
     }
+    
+    private void updateSmileImage(String image) {
+		ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource(image));
+		JLabel imageLabel = new JLabel();
+		imageLabel.setIcon(ii);
+		gifPanel.removeAll();
+		gifPanel.add(imageLabel);
+		this.getParent().revalidate();
+		this.getParent().repaint();
+	}
 
     private void createTrainImage() {
         List<List<Double>> records = new ArrayList<>();
