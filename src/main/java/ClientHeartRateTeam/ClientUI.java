@@ -2,7 +2,10 @@ package ClientHeartRateTeam;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -46,6 +49,44 @@ public class ClientUI extends JPanel {
         graph = new Graph(graphModel);
         this.add(graph);
         graph.initializeView();
+        createTrainImage();
+    }
+
+    private void createTrainImage() {
+        List<List<Double>> records = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("totalData.csv"))) {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                List<Double> list = new ArrayList<>();
+                list.add(Double.parseDouble(values[6]));
+                list.add(Double.parseDouble(values[7]));
+                records.add(list);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        GraphModel model = new GraphModel();
+        Graph trainGraph = new Graph(model);
+        trainGraph.initializeView();
+
+        model.setNoOfChannels(1);
+        Color channelColors[] = new Color[] { Color.RED };
+        model.setChannelColors(channelColors);
+
+        ArrayList<ArrayList<CoordinatesModel>> graphData = new ArrayList<>();
+
+        for (List<Double> record: records) {
+            ArrayList<CoordinatesModel> coordinatesList = new ArrayList<>();
+            coordinatesList.add(new CoordinatesModel(record.get(0), record.get(1)));
+            graphData.add(coordinatesList);
+        }
+
+        model.setXLength(1);
+        model.setGraphData(graphData);
+        trainGraph.updateGraphView(model, "trainChart.png");
     }
 
     // Method called when the application is shut down

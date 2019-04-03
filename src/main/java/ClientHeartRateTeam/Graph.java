@@ -62,7 +62,7 @@ public class Graph extends JPanel {
    * @param graphModel a model object containing required graph data.
    * @see GraphModel
    */
-  public void updateGraphView(GraphModel graphModel) {
+  public void updateGraphView(GraphModel graphModel, String saveFileName) {
     this.graphModel = graphModel;
     legendDisplay = false;
     remove(chartPanel);
@@ -72,7 +72,7 @@ public class Graph extends JPanel {
     add(chartPanel);
     setVisible(true);
     try {
-      ChartUtils.saveChartAsPNG(new File("chart.png"), chart, 400, 400);
+      ChartUtils.saveChartAsPNG(new File(saveFileName), chart, 800, 800);
     } catch (Exception ex){
       System.out.println(ex);
     }
@@ -119,7 +119,7 @@ public class Graph extends JPanel {
    * @return chart JFreeChart
    */
   private JFreeChart createChart(final XYDataset dataSet) {
-    JFreeChart chart = ChartFactory.createXYLineChart("", "Pleasure",
+    JFreeChart chart = ChartFactory.createScatterPlot("", "Pleasure",
         "Arousal", dataSet, PlotOrientation.VERTICAL, legendDisplay, true,
         false);
     chart.setBackgroundPaint(Color.decode("#AFAFAF"));
@@ -144,7 +144,7 @@ public class Graph extends JPanel {
       renderer.setSeriesShapesVisible(i, false);
     }
 
-    plot.setRenderer(renderer);
+    //plot.setRenderer(renderer);
     plot.setBackgroundPaint(Color.decode("#676165"));
 
     plot.setRangeGridlinesVisible(false);

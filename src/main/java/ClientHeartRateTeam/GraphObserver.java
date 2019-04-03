@@ -20,19 +20,15 @@ public class GraphObserver implements Observer{
 
 		ArrayList<ArrayList<CoordinatesModel>> graphData = ClientUI.getInstance().graphModel.getGraphData();
 
-		ArrayList<CoordinatesModel> coordinatesListStart = new ArrayList<>();
-		coordinatesListStart.add(new CoordinatesModel(0, 0));
-
 		ArrayList<CoordinatesModel> coordinatesList = new ArrayList<>();
 		coordinatesList.add(new CoordinatesModel(Double.parseDouble(values[1]), Double.parseDouble(values[2])));
 
 		graphData.clear();
-		graphData.add(coordinatesListStart);
 		graphData.add(coordinatesList);
 
 		ClientUI.getInstance().graphModel.setXLength(1);
 		ClientUI.getInstance().graphModel.setGraphData(graphData);
-		ClientUI.getInstance().graph.updateGraphView(ClientUI.getInstance().graphModel);
+		ClientUI.getInstance().graph.updateGraphView(ClientUI.getInstance().graphModel, "chart.png");
 	}
 
 }
