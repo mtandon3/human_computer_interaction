@@ -36,7 +36,7 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 
 	private ClientSubscriber subscriber;
 	private final ExecutorService service;
-	private JTextPane dataPane = new JTextPane();
+	//private JTextPane dataPane = new JTextPane();
 	private JTextField ipAddress = new JTextField();
 	private JTextField port = new JTextField();
 	private JButton connect = new JButton();
@@ -102,21 +102,21 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 	// Method used to create main panel in each server element
 	private Component createMainPanel() {
 		JPanel panel = new JPanel(new GridLayout());
-		panel.setPreferredSize(new Dimension(400, 150));
+		//panel.setPreferredSize(new Dimension(400, 150));
 		panel.setBackground(Color.decode("#7d7d7d"));
 		panel.setOpaque(false);
 
-		this.dataPane.setFont(new Font("Tahoma", Font.BOLD, 12));
-		this.dataPane.setForeground(Color.BLUE);
+	//	this.dataPane.setFont(new Font("Tahoma", Font.BOLD, 12));
+	//	this.dataPane.setForeground(Color.BLUE);
 		
 		//this.dataPane.setCaretColor(Color.decode("#030303"));
-		this.dataPane.setBackground(Color.decode("#c0e0f0"));
-		this.dataPane.setEnabled(false);
-		this.dataPane.setEditable(true);
+	//	this.dataPane.setBackground(Color.decode("#c0e0f0"));
+	//	this.dataPane.setEnabled(false);
+	//	this.dataPane.setEditable(true);
 		//this.dataPane.
 
-		JScrollPane scrollPane = new JScrollPane(this.dataPane);
-		panel.add(scrollPane);
+	//	JScrollPane scrollPane = new JScrollPane(this.dataPane);
+	//	panel.add(scrollPane);
 		return panel;
 
 	}
@@ -150,7 +150,7 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 				return;
 			}
 
-			dataPane.setText("");
+			//dataPane.setText("");
 			connect.setText("Stop");
 			subscriber.setIp(ipAddress.getText());
 			subscriber.setPort(Integer.parseInt(port.getText()));
@@ -186,7 +186,7 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 				JOptionPane.showMessageDialog(new JPanel(), "Server Stopped", "Error", JOptionPane.ERROR_MESSAGE);
 			
 			final String dir = System.getProperty("user.dir");
-			dataPane.setText("CSV file generated in "+dir+" directory.");
+			//dataPane.setText("CSV file generated in "+dir+" directory.");
 		} else if (data.compareTo("FAIL") == 0) {
 			JOptionPane.showMessageDialog(new JPanel(), "Connection Fail: Server not running", "Error", JOptionPane.ERROR_MESSAGE);
 			connect.setText("Connect");
@@ -194,8 +194,8 @@ public class UIElement extends JPanel implements Observer, ActionListener {
 			System.out.println(CombinedDataStatefull.getInstance());
 			CombinedDataStatefull combined = CombinedDataStatefull.getInstance();
 			combined.addToGlobalQueue(data);
-			dataPane.setText(dataPane.getText() + "\n" + data);
-			dataPane.setForeground(Color.BLACK);
+		//	dataPane.setText(dataPane.getText() + "\n" + data);
+		//	dataPane.setForeground(Color.BLACK);
 			this.getParent().revalidate();
 			this.getParent().repaint();
 		}

@@ -40,7 +40,7 @@ public class ClientUI extends JPanel {
     // Constructor for creating the client UI to collect data from servers
     private ClientUI() {
         this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(600, 800));
+        this.setPreferredSize(new Dimension(600, 500));
         this.setLayout(new GridLayout(2, 2));
 
         for(int i=0 ;i<2;i++) {
@@ -60,7 +60,7 @@ public class ClientUI extends JPanel {
         	this.add(gifPanel);
     }
     
-    private void updateSmileImage(String image) {
+    public  void updateSmileImage(String image) {
 		ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource(image));
 		JLabel imageLabel = new JLabel();
 		imageLabel.setIcon(ii);
