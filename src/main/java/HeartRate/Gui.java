@@ -83,6 +83,7 @@ public class Gui extends JPanel implements ActionListener {
 		buttons.add(resting);
 		buttons.add(moderate);
 		buttons.add(vigorous);
+		//buttons.set
 		resting.addActionListener(this);
 		moderate.addActionListener(this);
 		vigorous.addActionListener(this);

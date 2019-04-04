@@ -25,7 +25,7 @@ public class GraphObserver implements Observer{
 		coordinatesList.add(new CoordinatesModel(Double.parseDouble(values[1]), Double.parseDouble(values[2])));
 		if(Double.parseDouble(values[1]) >= 0.6 && Double.parseDouble(values[2])>=0.6) {
 			ClientUI.getInstance().updateSmileImage("smile.png");
-		}else if(Double.parseDouble(values[1]) < 0.3 && Double.parseDouble(values[1])<0.6) {
+		}else if(Double.parseDouble(values[1]) < 0.3 && Double.parseDouble(values[2])<0.6) {
 			ClientUI.getInstance().updateSmileImage("sad.png");
 		}else {
 			ClientUI.getInstance().updateSmileImage("neutral.png");
