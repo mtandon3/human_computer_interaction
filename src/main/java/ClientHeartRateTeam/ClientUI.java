@@ -1,5 +1,7 @@
 package ClientHeartRateTeam;
 
+import org.apache.spark.api.java.JavaSparkContext;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
