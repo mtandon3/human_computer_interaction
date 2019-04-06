@@ -17,7 +17,7 @@ public class PredictData {
         model = ModelSerializer.restoreMultiLayerNetwork(location);
     }
 
-    public int getResult(double a, double b, double c, double d){
+    public int getResult(MultiLayerNetwork model, double a, double b, double c, double d){
 
         INDArray test = Nd4j.create(new double[] {a,b,c,d});
 
@@ -32,11 +32,11 @@ public class PredictData {
         Classifier.train();
 
         PredictData obj = new PredictData();
-        obj.loadModel();
+        /*obj.loadModel();
         obj.getResult(0.290973605,0.51151998,0.008557452,0.676923077);
         obj.getResult(0.290973605,0.286469015,0.386109669,0.876923077);
         obj.getResult(0.290973605,0.146007744,0.421984663,0.815384615);
         obj.getResult(0.290973605,0.573980061,0.004215424,0.676923077);
-        obj.getResult(0.290973605,0.577866395,0.472755787,0.838461538);
+        obj.getResult(0.290973605,0.577866395,0.472755787,0.838461538);*/
     }
 }

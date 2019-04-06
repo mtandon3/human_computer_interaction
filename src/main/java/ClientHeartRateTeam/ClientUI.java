@@ -1,15 +1,14 @@
 package ClientHeartRateTeam;
 
-import org.apache.spark.api.java.JavaSparkContext;
+import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.deeplearning4j.util.ModelSerializer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +25,8 @@ public class ClientUI extends JPanel {
     private List<UIElement> simulators = new ArrayList<>();
     public GraphModel graphModel;
     public Graph graph;
+    public PredictData predictData;
+    public MultiLayerNetwork model;
     private final JPanel gifPanel = new JPanel();
     
 	
@@ -54,12 +55,23 @@ public class ClientUI extends JPanel {
         graph = new Graph(graphModel);
         this.add(graph);
         graph.initializeView();
-        //createTrainImage();
         ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource("neutral.png"));
-        	JLabel imageLabel = new JLabel();
-        	imageLabel.setIcon(ii);
-        	gifPanel.add(imageLabel);
-        	this.add(gifPanel);
+        JLabel imageLabel = new JLabel();
+        imageLabel.setIcon(ii);
+        gifPanel.add(imageLabel);
+        this.add(gifPanel);
+
+        predictData = new PredictData();
+        try {
+            loadModel();
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void loadModel() throws IOException {
+        File location = new File("model.zip");
+        model = ModelSerializer.restoreMultiLayerNetwork(location);
     }
     
     public  void updateSmileImage(String image) {
@@ -72,42 +84,6 @@ public class ClientUI extends JPanel {
 		this.getParent().repaint();
 	}
 
-    private void createTrainImage() {
-        List<List<Double>> records = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("totalData.csv"))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                List<Double> list = new ArrayList<>();
-                list.add(Double.parseDouble(values[6]));
-                list.add(Double.parseDouble(values[7]));
-                records.add(list);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
-        GraphModel model = new GraphModel();
-        Graph trainGraph = new Graph(model);
-        trainGraph.initializeView();
-
-        model.setNoOfChannels(1);
-        Color channelColors[] = new Color[] { Color.RED };
-        model.setChannelColors(channelColors);
-
-        ArrayList<ArrayList<CoordinatesModel>> graphData = new ArrayList<>();
-
-        for (List<Double> record: records) {
-            ArrayList<CoordinatesModel> coordinatesList = new ArrayList<>();
-            coordinatesList.add(new CoordinatesModel(record.get(0), record.get(1)));
-            graphData.add(coordinatesList);
-        }
-
-        model.setXLength(1);
-        model.setGraphData(graphData);
-        trainGraph.updateGraphView(model, "trainChart.png");
-    }
 
     // Method called when the application is shut down
     private void shutdown() {
