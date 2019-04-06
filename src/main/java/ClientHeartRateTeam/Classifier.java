@@ -12,6 +12,7 @@ import org.deeplearning4j.nn.conf.layers.DenseLayer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
+import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
@@ -21,6 +22,7 @@ import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.NormalizerStandardize;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Classifier {
@@ -28,7 +30,8 @@ public class Classifier {
     private static final int CLASSES_COUNT = 3;
     private static final int FEATURES_COUNT = 4;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+//    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void train() throws IOException, InterruptedException{
 
         DataSet allData;
         try (RecordReader recordReader = new CSVRecordReader(0, ',')) {
@@ -44,13 +47,13 @@ public class Classifier {
         normalizer.fit(allData);
         normalizer.transform(allData);
 
-        SplitTestAndTrain testAndTrain = allData.splitTestAndTrain(0.95);
+        SplitTestAndTrain testAndTrain = allData.splitTestAndTrain(0.70);
         DataSet trainingData = testAndTrain.getTrain();
         DataSet testData = testAndTrain.getTest();
 
         MultiLayerConfiguration configuration = new NeuralNetConfiguration.Builder()
                 .iterations(1000)
-                .activation(Activation.TANH)
+                .activation(Activation.RELU)
                 .weightInit(WeightInit.XAVIER)
                 .learningRate(0.1)
                 .regularization(true).l2(0.0001)
@@ -74,7 +77,11 @@ public class Classifier {
         Evaluation eval = new Evaluation(CLASSES_COUNT);
         eval.eval(testData.getLabels(), output);
         System.out.println(eval.stats());
-        
+
+        File location = new File("model.zip");
+        boolean saveUpdater = true;
+        ModelSerializer.writeModel(model, location, saveUpdater);
+
     }
 
 }
