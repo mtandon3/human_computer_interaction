@@ -23,7 +23,6 @@ public class PredictData {
 
         int[] output = model.predict(test);
 
-        System.out.println(output[0]);
         return output[0];
     }
 
