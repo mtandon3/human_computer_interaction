@@ -4,9 +4,6 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.jfree.chart.ChartUtils;
@@ -46,9 +43,7 @@ public class Graph extends JPanel {
    */
   public void initializeView() {
     setLayout(new GridLayout(1, 1, 8, 8));
-    setBorder(new TitledBorder(null, "Graph",
-        TitledBorder.CENTER, TitledBorder.TOP, new Font("Courier New", Font.BOLD, TITLE_FONT_SIZE), null));
-    setBackground(Color.decode("#AFAFAF"));
+    setBackground(Color.decode("#ffffff"));
     XYSeriesCollection dataSet = new XYSeriesCollection();
     chart = createChart(dataSet);
     chartPanel = new ChartPanel(chart);
@@ -71,11 +66,6 @@ public class Graph extends JPanel {
     chartPanel = new ChartPanel(chart);
     add(chartPanel);
     setVisible(true);
-    try {
-      ChartUtils.saveChartAsPNG(new File(saveFileName), chart, 800, 800);
-    } catch (Exception ex){
-      System.out.println(ex);
-    }
   }
 
   /**
@@ -122,7 +112,7 @@ public class Graph extends JPanel {
     JFreeChart chart = ChartFactory.createScatterPlot("", "Pleasure",
         "Arousal", dataSet, PlotOrientation.VERTICAL, legendDisplay, true,
         false);
-    chart.setBackgroundPaint(Color.decode("#AFAFAF"));
+    chart.setBackgroundPaint(Color.decode("#ffffff"));
 
     XYPlot plot = chart.getXYPlot();
 
@@ -130,10 +120,12 @@ public class Graph extends JPanel {
     if(graphModel.getXLength() == 0)
       graphModel.setXLength(1);
     range.setRange(0, graphModel.getXLength());
-    plot.getRangeAxis().setRange(0, 1);
-    plot.getRangeAxis().setTickLabelPaint(Color.WHITE);
-    range.setTickLabelPaint(Color.WHITE);
+    range.setTickLabelPaint(Color.decode("#0d3d56"));
     range.setTickLabelFont(new Font("Courier New", Font.BOLD, GRAPH_AXIS_FONT_SIZE));
+
+    plot.getRangeAxis().setRange(0, 1);
+    plot.getRangeAxis().setTickLabelPaint(Color.decode("#0d3d56"));
+    plot.getRangeAxis().setTickLabelFont(new Font("Courier New", Font.BOLD, GRAPH_AXIS_FONT_SIZE));
 
 
     XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
@@ -145,7 +137,7 @@ public class Graph extends JPanel {
     }
 
     //plot.setRenderer(renderer);
-    plot.setBackgroundPaint(Color.decode("#676165"));
+    plot.setBackgroundPaint(Color.decode("#4a6b7c"));
 
     plot.setRangeGridlinesVisible(false);
     plot.setDomainGridlinesVisible(false);

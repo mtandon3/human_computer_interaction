@@ -47,7 +47,7 @@ public class ClientUI extends JPanel {
         this.setLayout(new GridLayout(2, 2));
 
         for(int i=0 ;i<2;i++) {
-            UIElement uiElement = new UIElement(new ClientSubscriber("",-1),colors[i]);
+            UIElement uiElement = new UIElement(new ClientSubscriber("",-1),colors[0]);
             simulators.add(uiElement);
             this.add(uiElement);
         }
@@ -59,6 +59,7 @@ public class ClientUI extends JPanel {
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(ii);
         gifPanel.add(imageLabel);
+        gifPanel.setBackground(Color.WHITE);
         this.add(gifPanel);
 
         predictData = new PredictData();
